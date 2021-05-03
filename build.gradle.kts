@@ -28,17 +28,23 @@ repositories {
 }
 */
 
-// NOTE: compileOnly means we can refer to it but it won't be copied to the "fat" JAR
-//       implementation means we copy it to the fat JAR and have it available for
-//         clients to use
+// NOTE:
+//  * compileOnly means we can refer to it but it won't be copied to the "fat" JAR
+//  * implementation means we copy it to the fat JAR and have it available for
+//    clients to use
+//
 // e.g. BaseMod/ModTheSpire are compileOnly because they will exist when the game
 //   loads and we don't need to include them twice. If you pull a random library
 //   from github or something, you'll need to bake it into the final JAR (making it
-//   fat) in order to use it in game without runtime errors.
+//   fat) in order to use it in game without runtime errors. Declaring these libs
+//   implementation will automatically bake them into the final JAR using our build
+//   tasks.
 dependencies {
     compileOnly(fileTree(compileOnlyLibs))
 
-    // Add extra library JARs here (e.g. from mavenCentral, jitpack, etc.).
+    // Add extra library JARs here (e.g. from mavenCentral, jitpack, local, etc.).
+    // The database repo versions (like jitpack) typically have instructions on
+    // what to copy into here - so refer to those as needed.
     // Examples:
     //implementation("name:of:maven:library")
     //implementation(file("/path/to/local/jar"))
