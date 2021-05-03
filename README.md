@@ -1,6 +1,6 @@
 # Gradle Template
 
-A simple base for Slay the Spire mods that uses Gradle instead of Maven. This template assumes you are roughly familiar with the basics of setting up a mod already (e.g. needing to edit a ModTheSpire.json, knowing how to run Maven builds etc.) and is more aimed at making the transition from Maven to Gradle as painless as possible.
+A simple base for Slay the Spire mods that uses Gradle instead of Maven. This template assumes you are roughly familiar with the basics of setting up a mod already (e.g. needing to edit a ModTheSpire.json, knowing how to run Maven builds etc.) and is more aimed at making the transition from Maven to Gradle as painless as possible. *This repo is designed for mods written in Java, not Kotlin, although the switch over for Kotlin development should be extremely simple to accomplish.*
 
 This repository just has a basic starting mod that will spit out a hello world into the console in game after running the included "buildAndCopyJAR" task. It doesn't quite work right out of the box (you need to set up some environment variables), but if you have built Maven mods before you should be able to get it working after cloning this repository relatively quickly.
 
