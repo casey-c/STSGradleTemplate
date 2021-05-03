@@ -49,3 +49,25 @@ You can tweak the dependencies section slightly to refer to the **desktop-1.0.ja
 You may wish to add an additional task inside your **build.gradle.kts** which *dependsOn(buildAndCopyJAR)* and also launches Slay the Spire with mods. While I haven't set this up for myself, I imagine it wouldn't be too difficult, and you can use this as a little exercise to learn a bit more about Gradle. Additional exercises that may be useful for learning purposes would be to make the buildAndCopyJAR also perform a clean build step, or to make a task that copies to a folder where you manage uploads to the Steam workshop.
 
 If you use IntelliJ IDEA, it's probably worth making this repo (or one with your own tweaks) as a project template or collection of file templates, to make starting new mods as painless as possible. A dream goal would be to make a Gradle SlayTheSpire IntelliJ new project wizard (using the IntelliJ plugin SDK), but I don't have the time to make that personally. Imagine a world where you can do File -> New Project -> New Slay the Spire Gradle Project where you can set the author name, mod name, etc. in a simple wizard and have it automatically make everything including the ModTheSpire.json etc. in a simple one-step process. Somebody get on that!
+
+---
+
+## Quick reference steps for starting a new mod
+
+#### Precursors (only need to do the first time)
+1. Read through the entirety of this README at least once just so you have a general idea of what this repository is supposed to do / why it exists.
+2. Ensure you have the proper folders set up with the JAR files in the right places and your environment variables working. (See instructions in previous section).
+   
+#### Each time you start a new gradle mod (at least until you make IntelliJ templates like a reasonable person would do)
+1. Clone this repository into an empty folder.
+
+```
+git clone https://github.com/casey-c/stsgradletemplate
+```
+
+2. Open in IntelliJ-IDEA and wait for Gradle / indexing / etc. to finish initializing.
+3. Expand the "External Libraries" option of the project pane (on the left) to verify that Java 1.8 is included, as well as the game, BaseMod, and ModTheSpire. If you see the wrong SDK version, be sure to change it using the ```File -> Project Structure``` menu.
+4. Open **settings.gradle** and rename the ```rootProject.name``` to be your desired mod name. You can also refactor->rename the main classes/folders to be whatever you want them to be and fill out the ModTheSpire.json now if you wish.
+5. ```View -> Tool Windows -> Gradle``` to open up the Gradle panel. Expand the "Slay the Spire" group and double click the "buildAndCopyJAR" task to run it. After running it once, your run/debug configuration on the top bar should automatically update to have this task for future builds (in the latest versions of IntelliJ-IDEA at least). A "YourMod.jar" will have been copied to the Slay the Spire install location, where "YourMod" is whatever you put inside the rootProject.name in step 4.
+6. Launch Slay the Spire with mods (and with the debug console output logs), enable your mod, and verify that you see your mod's post initialize hello world.
+7. Draw the rest of the owl and make your mod
