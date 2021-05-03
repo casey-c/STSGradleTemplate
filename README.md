@@ -1,13 +1,17 @@
 # Gradle Template
 
-A simple base for Slay the Spire mods that uses Gradle instead of Maven. This template assumes you are roughly familiar with the basics of setting up a mod already (e.g. needing to edit a ModTheSpire.json, knowing how to run Maven builds etc.) and is more aimed at making the transition from Maven to Gradle as painless as possible. *This repo is designed for mods written in Java, not Kotlin, although the switch over for Kotlin development should be extremely simple to accomplish.*
+A simple base for Slay the Spire mods that uses Gradle instead of Maven. This template assumes you are roughly familiar with the basics of setting up a mod already (e.g. needing to edit a ModTheSpire.json, knowing how to run Maven builds etc.) and is more aimed at making the transition from Maven to Gradle as painless as possible. 
+
+**This repo is designed for mods written in Java, not Kotlin, although the switch over for Kotlin development should be relatively straightforward if you peruse the Gradle documentation.**
 
 This repository just has a basic starting mod that will spit out a hello world into the console in game after running the included "buildAndCopyJAR" task. It doesn't quite work right out of the box (you need to set up some environment variables), but if you have built Maven mods before you should be able to get it working after cloning this repository relatively quickly.
 
+Instructions on starting a mod from this template are included at the bottom of this README, but you'll need to complete at least the requirements section first to actually follow them. I also recommend skimming through the rest of this page before starting a new project with it.
+
 ## Why Gradle?
 1. Easier to read and maintain (subjective: but in my opinion tasks in the Kotlin script are miles, miles, miles ahead of working with a nightmare pom.xml)
-2. Easier dependency management (don't need to mess about with shading/etc. - dependencies are graph based instead of some weird linear stuff and much easier to reason about; most importantly: including external libraries are a breeze compared to Maven)
-3. Faster compile times (YMMV and it might be placebo, but it seems to me that the Gradle builds are optimized much better than the Maven builds; likely due to Gradle being designed as a more modern successor to Maven)
+2. Easier dependency management (don't need to mess about with shading/etc. - dependencies are graph based instead of some weird linear staging which means they are much easier to reason about; most importantly: including external libraries are a breeze compared to Maven)
+3. Faster compile times (YMMV and it might be placebo, but I've seen noticeable speedups on most of my projects)
 
 ## Requirements:
 
@@ -23,16 +27,16 @@ This repository just has a basic starting mod that will spit out a hello world i
       export STS_MODDING_LIB="/home/casey/documents/sts_modding/lib/"
       ```
 
-* You need to launch IntelliJ IDEA (or other tools like Vim) in a manner that actually includes your environment variables. On my system, this doesn't work from DMENU and requires me to launch *idea* from a terminal (with a helper script/alias to make that as convenient as possible).
+* You need to launch IntelliJ IDEA (or other tools like Vim) in a manner that actually includes your environment variables. On my system, this doesn't work from DMENU (or things like a desktop shortcut) but requires me to launch *idea* from a terminal (with a helper script/alias to make that as convenient as possible). You'll know very quickly if you have access to the environment variables because Gradle will spit out an error "String can't be null" or something like that when it tries to load your project.
 
 * **IMPORTANT:** once you clone this project and open it up in IntelliJ idea, make sure that you're using the proper Java 1.8 SDK. I noticed on my own machine that loading it up in IntelliJ after cloning into a tmp directory that it defaulted to my most recent Java SDK instead of the one necessary for Slay the Spire mods. You can tell if you're using the wrong SDK at a glance by seeing something other than Java 1.8 in the "External Libraries" section of your project pane (left side of the work area by default in IDEA, which you can open/close with the Alt+1 keyboard shortcut). You can select the proper SDK via the File -> Project Structure -> Project Settings -> Project -> Project SDK and choose the proper 1.8 one from the drop down menu. I'm not quite sure if there's something I can do to alter the repo so that this doesn't happen when cloning, but it's an easy enough fix that it might not matter.
 
-## Usage
+## Brief overview of Gradle
 Each project has a **build.gradle.kts** (written in Kotlin) and a **settings.gradle** (containing one line, written in Groovy). The build file sets up the gradle build tasks (one that builds a fat JAR and one that builds the JAR and copies it to your **STS_INSTALL/mods** directory for testing). This **build.gradle.kts** file will use your environment variables and won't need to be touched in most cases. The **settings.gradle** file however should be edited for each mod, as the line inside will determine the name of the final artifact that gets created. If you don't edit the **settings.gradle** project name you'll be building *GradleTemplate.jar* instead of *YourMod.jar*.
 
 If you require additional libraries (and this is one example where the Gradle system shines over Maven), you can tweak the *build.gradle.kts* file. There are some minor explanatory comments in there to hopefully guide you on what is required. Basically, if you pull from an online database repository like Maven Central or Jitpack, you need to include the source in a repositories section. Then, to get access to the actual libraries, you include it as an "implementation(...)" inside the dependencies section. Marking it as implementation (not compileOnly) means it will be included in the final fat JAR, and usable in game without a runtime error. You can also use locally downloaded JAR libraries as well (this only needs to be placed inside the dependencies section, as no repository is needed).
 
-### Compiling in IntelliJ IDEA
+#### Compiling in IntelliJ IDEA
 Much like Maven, there are particular build tasks that we're interested in running. The primary one is "buildAndCopyJAR" under the "slay the spire" group. You can find these in the following UI menu:
 
     View->Tool Windows->Gradle
