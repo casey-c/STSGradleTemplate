@@ -1,0 +1,14 @@
+{
+  "modid": "ojb_GradleTemplate",
+  "name": "GradleTemplate",
+  "author_list": [
+    "ojb"
+  ],
+  "description": "A Slay the Spire mod",
+  "version": "0.0.1",
+  "sts_version": "12-22-2020",
+  "mts_version": "3.18.2",
+  "dependencies": [
+    "basemod"
+  ]
+}
